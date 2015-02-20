@@ -9,17 +9,19 @@ var gpio = require('onoff').Gpio;
 // MY EXPORTS
 
 // GLOBALS
-console.log('setup');
+console.log('GPIO setup');
 var redLED = new gpio(21,'out');
+console.log('GPIO 21 is a Red LED');
 var yellowLED = new gpio(16, 'out');
+console.log('GPIO 16 is a Yellow LED');
 var greenLED = new gpio(23, 'out');
+console.log('GPIO 23 is a Green LED');
 var button = new gpio(12, 'in', 'both');
-
-console.log('watching button');
+console.log('GPIO 12 is a button.');
 
 button.watch( 
 	function(err,value) {
-		console.log('press:' + value );
+		console.log('Button press:' + value );
 		
 		if( value === 1 ) {
 			greenLED.writeSync(value);
@@ -31,12 +33,13 @@ button.watch(
 		}
 	}
 );
+console.log('Watching button ...');
 
 // CREATE THE APP
 var app = express();
 
 app.get('/red', function(req, res) {
-	console.log( 'red request received' );
+	console.log( 'HTTP red request received' );
 
 	redLED.writeSync( redLED.readSync() === 0 ? 1:0 );
 	
@@ -46,7 +49,7 @@ app.get('/red', function(req, res) {
 });
 
 app.get('/yellow', function(req, res) {
-	console.log( 'yellow request received' );
+	console.log( 'HTTP yellow request received' );
 
 	yellowLED.writeSync( yellowLED.readSync() === 0 ? 1:0 );
 
@@ -56,7 +59,7 @@ app.get('/yellow', function(req, res) {
 });
 
 app.get('/green', function(req, res) {
-	console.log( 'red request received' );
+	console.log( 'HTTP green request received' );
 
 	greenLED.writeSync( greenLED.readSync() === 0 ? 1:0 );
 	
@@ -66,7 +69,7 @@ app.get('/green', function(req, res) {
 });
 
 app.listen( port, function() {
-	console.log('listening on port ' + port );
+	console.log('SERVER listening on port ' + port );
 
 });
 
@@ -80,7 +83,6 @@ function flashyBits() {
 	delayedWrite(600,redLED,0);
 	delayedWrite(700,yellowLED,1);
 	delayedWrite(800,yellowLED,0);
-	
 }
 
 function delayedWrite(delay, led, value) {
