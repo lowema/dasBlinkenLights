@@ -24,7 +24,7 @@ button.watch(
 		console.log('Button press:' + value );
 		
 		if( value === 1 ) {
-			greenLED.writeSync(value);
+			redLED.writeSync(value);
 			flashyBits();
 		} else {
 			redLED.writeSync(value);
@@ -75,12 +75,12 @@ app.listen( port, function() {
 
 //HELPERS
 function flashyBits() {
-	delayedWrite(100,redLED,1);
-	delayedWrite(200,redLED,0);
+	delayedWrite(100,greenLED,1);
+	delayedWrite(200,greenLED,0);
 	delayedWrite(300,yellowLED,1);
 	delayedWrite(400,yellowLED,0);
-	delayedWrite(500,redLED,1);
-	delayedWrite(600,redLED,0);
+	delayedWrite(500,greenLED,1);
+	delayedWrite(600,greenLED,0);
 	delayedWrite(700,yellowLED,1);
 	delayedWrite(800,yellowLED,0);
 }
